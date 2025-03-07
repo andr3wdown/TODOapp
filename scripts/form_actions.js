@@ -13,17 +13,31 @@ let subtask_template = {
     completed: false
 };
 
-//initialize the todo object from local storage if it exists otherwise create a new empty one
+//initialize the page
 function initialize(){
-    try{
-        todo = JSON.parse(localStorage.getItem("todo"));
-    }
-    catch{
+    //initialize the todo object
+    todo = JSON.parse(localStorage.getItem("todo"));
+    //if the todo object is not found in localStorage, create a new one
+    if(todo == null){
         todo = {
             nextId: 0,
             tasks: {}
         };
     }
+    //initialize the button that opens the dialog box for creating a new task
+    let showbutton = document.getElementById("dialog-button");
+    showbutton.addEventListener("click", () => {
+        popup = document.getElementById("create-dialog");
+        popup.showModal();
+        createNewTask();
+    });
+
+    //initialize the button that adds a new task in the dialog box
+    let subtask_button = document.getElementById("subtask-button");
+    subtask_button.addEventListener("click", () => {
+        addSubtask(current_task.id);
+        console.log("pressed");
+    });
 }
 
 //delete subtask with id subtaskId
@@ -50,6 +64,25 @@ function toggleSubtask(subtaskId){
         toggled = true;
     }
 }
+//intializes the current_task variable with a new task object
+function createNewTask(){
+    if(todo == null){
+        alert("Error: todo object not initialized!");
+        return;
+    }
+    current_task = Object.assign({}, task_template);
+    current_task.id = todo.nextId;
+}
+//finalizes the creation of a new task and adds it to the todo object
+function addTask(){
+    if(todo == null){
+        alert("Error: todo object not initialized!");
+        return;
+    }
+    
+    todo.nextId += 1;
+
+}
 
 //adds a new subtask to a task
 function addSubtask(taskId){
@@ -58,20 +91,33 @@ function addSubtask(taskId){
         return;
     }
     let subtaskContainer = document.getElementById("subtask-container");
-    current_subtask = Object.assign({}, subtask_template);
-    //fetch the template for a subtask card from templates folder
+    //initialize the current_subtask variable with a new subtask object and add it to the current task's subtasks array
+    let current_subtask = Object.assign({}, subtask_template);
+    current_subtask.id = current_task.subtasks.length;
+    current_task.subtasks.push(current_subtask);
+    //fetch the template for the subtask card from the templates folder
     //if the template is not found, log the error
     fetch("../templates/subtask.html").then(response => response.text()).then(template => {
-        template.replaceAll("_task", todo.nextId);
-        template.replaceAll("_subid", );
+        //replace the placeholders in the template with the actual values
+        template = template.replaceAll("_task", taskId);
+        template = template.replaceAll("_subid", current_subtask.id);
+        //add the template to the subtask container
         subtaskContainer.innerHTML += template;
         console.log(template);
     }).catch(error => console.log(error));
 }
 
+//clear the input fields and close the dialog
+function closeDialog(){
+    let dialog = document.getElementById("create-dialog");
+    let taskInput = document.getElementById("task-name");
+    let subtaskContainer = document.getElementById("subtask-container");
 
-
-
+    taskInput.value = "";
+    subtaskContainer.innerHTML = "";
+    current_task = null;
+    dialog.close();
+}
 /*
 //starts editing subtask with id subtaskId
 function startEditSubtask(subtaskId){
