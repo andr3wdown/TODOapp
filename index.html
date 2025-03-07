@@ -13,7 +13,8 @@
     <script src="scripts/form_actions.js" defer></script>
     <title>TODO App</title>
 </head>
-<body>
+<body onload="initialize()">
+    
     <header>
         <h1>TODO App</h1>
     </header>
@@ -36,7 +37,7 @@
                         </div>
                     </div>
 
-                    <button type="button" onclick="addSubtask()" id="subtask-button">Add subtask</button>
+                    <button type="button" onclick="addSubtask('_task')" id="subtask-button">Add subtask</button>
                 </div>
                 
                 <button type="submit" id="task-button">Add task</button>
