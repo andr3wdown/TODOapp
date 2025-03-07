@@ -1,0 +1,36 @@
+:root{
+    --bg-color: #3d4c6b;
+    --text-color: #ffffff;
+    --content-color: #2e3b57;
+    --card-color: #2b3442;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: "Roboto", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+header{
+    text-align: center;
+}
+.center-inside{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.task-input{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+}
+.task-form{
+    flex-direction: column;
+    background-color: var(--content-color);
+    padding: 25px;
+    width: 30%;
+}
