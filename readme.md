@@ -1,11 +1,11 @@
-# Project Title 
-The name of the Project and all authors involved
+# TODO App
+TODO App for the course TO00BL10-3025 by Chong Lee
 
 ## Demo link:
-Access my site at [google.com](https://google.com)
+Access my site at [placeholder](https://google.com)
 
 ## How was the workload divided
-How was the workload divided. Who did what? 
+It was a solo project
 
 
 
@@ -21,7 +21,7 @@ How was the workload divided. Who did what?
 - [License](#license)
 
 ## About The App
-[Name of project] is an app that ...
+TODO App is an app where you can create tasks with subtasks and you can mark them as done as needed 
 
 ## Screenshots
 Add here atleast one screenshot of the working application 
@@ -30,8 +30,7 @@ Add here atleast one screenshot of the working application
 Picture by [Kelly Sikkema](https://unsplash.com/@kellysikkema)
 
 ## Technologies
-Describe which technologies were used and the role of each in your project. 
-I used the following technologies `html`, `css`, ...
+I used the following technologies `html`, `css`, `javascript`
 
 ## Setup
 Write brief instructions on how to run and use your app. For example:
