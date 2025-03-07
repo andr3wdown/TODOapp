@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+    <script src="scripts/form_actions.js" defer></script>
     <title>TODO App</title>
 </head>
 <body>
@@ -18,15 +19,27 @@
     </header>
     <main>
         <div class="task-input center-inside">
-            <form class="task-form center-inside" action="">
-                <input type="text" placeholder="What is your task?">
-                <div id="subtask-container" class="center-inside">
-                    <div class="subtask-card" id="sub-0"></div>
+            <form class="task-form center-inside rounded" action="#" onsubmit="validateForm()" method="post">
+                <h2>Create your task</h2>
+                <input class="rounded bottom-margin" type="text" placeholder="What is your task?">
+                <div class="subtask-input">
+                    <h3>Subtasks</h3>
+                    <div id="subtask-container" class="subtask-container enter-inside">
+                        <div class="subtask-card rounded bottom-margin" id="_task_subid">
+                            <div class="subtask-text-container">
+                                <input class="rounded" type="text" placeholder="What is your subtask?">
+                            </div>
+                            <div class="edits">
+                                <button type="button" class="subtask-delete subtask-button rounded" onclick="deleteSubtask('_task_subid')"><img class="icon" src="img/delete.svg" alt=""></button>
+                                <button type="button" class="subtask-complete subtask-button rounded" onclick="toggleSubtask('_task_subid')" toggled="false"><img class="icon" src="img/check_0.svg" alt=""></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="addSubtask()" id="subtask-button">Add subtask</button>
                 </div>
-                <input type="text" placeholder="What is your subtask?">
-                <button id="subtask-btn">Add subtask</button>
-                <br>
-                <button id="task-btn">Add task</button>
+                
+                <button type="submit" id="task-button">Add task</button>
             </form>
         </div>
         <div class="content">

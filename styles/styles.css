@@ -3,6 +3,10 @@
     --text-color: #ffffff;
     --content-color: #2e3b57;
     --card-color: #2b3442;
+
+    --button-color: #b1b1b1;
+    --button-hover: #6b6b6b;
+    --button-text: #000000;
 }
 *{
     margin: 0;
@@ -20,17 +24,63 @@ header{
 .center-inside{
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 0.2rem;
 }
 .task-input{
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+
 
 }
 .task-form{
     flex-direction: column;
     background-color: var(--content-color);
-    padding: 25px;
+    padding: 2rem;
     width: 30%;
+}
+.subtask-container{
+    display: flex;
+    flex-direction: column;
+}
+.subtask-input{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.subtask-card{
+    width: 100%;
+    background-color: var(--card-color);
+    display: flex;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.edits{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.subtask-button{
+    background-color: var(--button-color);
+    color: var(--button-text);
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    margin-left: 5px;
+    height: 50px;
+    width: 50px;
+}
+.icon{
+    filter: invert(1);
+}
+input{
+    min-height: 50px;
+}
+h1, h2, h3, h4, h5, h6{
+    margin-bottom: 1rem;
+}
+.bottom-margin{
+    margin-bottom: 1rem;
+}
+.rounded{
+    border-radius: 20px;
 }
