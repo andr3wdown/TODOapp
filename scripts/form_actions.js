@@ -15,13 +15,14 @@ let subtask_template = {
 
 //initialize the page
 function initialize(){
+
     //initialize the todo object
     todo = JSON.parse(localStorage.getItem("todo"));
     //if the todo object is not found in localStorage, create a new one
     if(todo == null){
         todo = {
             nextId: 0,
-            tasks: {}
+            tasks: []
         };
     }
     //initialize the button that opens the dialog box for creating a new task
@@ -75,13 +76,25 @@ function createNewTask(){
 }
 //finalizes the creation of a new task and adds it to the todo object
 function addTask(){
+    event.preventDefault();
     if(todo == null){
         alert("Error: todo object not initialized!");
         return;
     }
     
     todo.nextId += 1;
+    current_task.text = document.getElementById("task-name").value;
+    console.log(document.getElementById("task-name").value);
+    subtasks = document.querySelectorAll(".subtask-field");
+    for(let i = 0; i < current_task.subtasks.length; i++){
+        current_task.subtasks[i].text = subtasks[i].value;
+        console.log(subtasks[i].value);
+    }
 
+    todo.tasks.push(Object.assign({}, current_task));
+    localStorage.setItem("todo", JSON.stringify(todo));
+    current_task = null;
+    closeDialog();
 }
 
 //adds a new subtask to a task
@@ -103,7 +116,6 @@ function addSubtask(taskId){
         template = template.replaceAll("_subid", current_subtask.id);
         //add the template to the subtask container
         subtaskContainer.innerHTML += template;
-        console.log(template);
     }).catch(error => console.log(error));
 }
 
@@ -117,6 +129,10 @@ function closeDialog(){
     subtaskContainer.innerHTML = "";
     current_task = null;
     dialog.close();
+}
+function reset(){
+    localStorage.clear();
+    location.reload();
 }
 /*
 //starts editing subtask with id subtaskId
