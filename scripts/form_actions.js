@@ -1,6 +1,8 @@
 let todo = null;
 let editing = false;
 let current_task = null;
+
+//template objects for tasks and subtasks id set to -1 to avoid conflicts with the actual ids
 let task_template = {
     id: -1,
     text: "",
@@ -76,23 +78,24 @@ function createNewTask(){
 }
 //finalizes the creation of a new task and adds it to the todo object
 function addTask(){
-    event.preventDefault();
+    preventDefault();
     if(todo == null){
         alert("Error: todo object not initialized!");
         return;
     }
     
     todo.nextId += 1;
+    //fetch the task name from the input field and the subtasks from their corresponding input fields
     current_task.text = document.getElementById("task-name").value;
-    console.log(document.getElementById("task-name").value);
     subtasks = document.querySelectorAll(".subtask-field");
     for(let i = 0; i < current_task.subtasks.length; i++){
         current_task.subtasks[i].text = subtasks[i].value;
-        console.log(subtasks[i].value);
     }
-
+    //add the new task to the todo object tasks array
     todo.tasks.push(Object.assign({}, current_task));
+    //update the localStorage with the new todo object
     localStorage.setItem("todo", JSON.stringify(todo));
+    
     current_task = null;
     closeDialog();
 }
@@ -130,6 +133,8 @@ function closeDialog(){
     current_task = null;
     dialog.close();
 }
+//reset localstorage and reload the page
+//used for debugging
 function reset(){
     localStorage.clear();
     location.reload();
