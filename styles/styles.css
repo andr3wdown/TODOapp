@@ -116,8 +116,8 @@ h1, h2, h3, h4, h5, h6{
     left: calc(50% - 20vw);
     top: 2rem;
     max-height: calc(100vh - 4rem);
-    overflow-y: auto; 
-    margin-bottom: 2rem; 
+    overflow-y: auto;
+    margin-bottom: 2rem;
 }
 #dialog-button{
     position: fixed;
@@ -151,4 +151,21 @@ header{
 }
 .container{
     min-height: calc(100vh - 50px);
+}
+
+
+.dialog-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dialog-container::-webkit-scrollbar-track {
+    background: var(--content-color);
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.dialog-container::-webkit-scrollbar-thumb {
+    background-color: var(--button-color);
+    border-radius: 10px;
+    border: 2px solid var(--content-color);
 }
