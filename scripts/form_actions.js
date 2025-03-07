@@ -38,7 +38,7 @@ function initialize(){
     //initialize the button that adds a new task in the dialog box
     let subtask_button = document.getElementById("subtask-button");
     subtask_button.addEventListener("click", () => {
-        addSubtask(current_task.id);
+        addSubtaskToForm(current_task.id);
         console.log("pressed");
     });
 }
@@ -77,7 +77,7 @@ function createNewTask(){
     current_task.id = todo.nextId;
 }
 //finalizes the creation of a new task and adds it to the todo object
-function addTask(){
+function addTaskToForm(){
     preventDefault();
     if(todo == null){
         alert("Error: todo object not initialized!");
@@ -101,7 +101,7 @@ function addTask(){
 }
 
 //adds a new subtask to a task
-function addSubtask(taskId){
+function addSubtaskToForm(taskId){
     if(todo == null){
         alert("Error: todo object not initialized!");
         return;

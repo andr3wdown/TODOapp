@@ -10,6 +10,7 @@
     --button-text: #000000;
 }
 *{
+    font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -25,12 +26,18 @@ button, input[type="submit"], input[type="reset"] {
 	outline: inherit;
 }
 body{
-    font-family: "Roboto", sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
 }
 header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    padding-top: 0.5rem;
+    min-height: 50px;
+    
+    
 }
 .center-inside{
     display: flex;
@@ -108,7 +115,9 @@ h1, h2, h3, h4, h5, h6{
     width: 40%;
     left: calc(50% - 20vw);
     top: 2rem;
-
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto; 
+    margin-bottom: 2rem; 
 }
 #dialog-button{
     position: fixed;
@@ -129,4 +138,17 @@ h1, h2, h3, h4, h5, h6{
 input{
     color:black;
     padding: 0.5rem;
+}
+footer{
+    background-color: var(--card-color);
+    display: flex;
+    height: 50px;
+    justify-content: space-around;
+    align-items: center;
+}
+header{
+    background-color: var(--card-color);
+}
+.container{
+    min-height: calc(100vh - 50px);
 }

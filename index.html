@@ -14,40 +14,45 @@
     <title>TODO App</title>
 </head>
 <body onload="initialize()">
-    <div class="overlay">
-        <button id="dialog-button" class="task-button"><img class="icon" src="img/add.svg" alt=""></button>
-    </div>
-    <header>
-        <h1>TODO App</h1>
-    </header>
-    <main>
-        <dialog id="create-dialog" class="dialog-container">
-            <div class="task-input center-inside">
-                <form class="task-form center-inside rounded" action="" onsubmit="addTask()" method="post">
-                    <h2>Create your task</h2>
-                    <input id="task-name" class="rounded bottom-margin" type="text" placeholder="What is your task?" required>
-                    <div class="subtask-input">
-                        <h3>Subtasks</h3>
-                        <div id="subtask-container" class="subtask-container enter-inside">
-                            
+    <div class="container">
+        <div class="overlay">
+            <button id="dialog-button" class="task-button"><img class="icon" src="img/add.svg" alt=""></button>
+            <dialog id="create-dialog" class="dialog-container">
+                <div class="task-input center-inside">
+                    <form class="task-form center-inside rounded" action="" onsubmit="addTaskToForm()" method="post">
+                        <h2>Create your task</h2>
+                        <input id="task-name" class="rounded bottom-margin" type="text" placeholder="What is your task?" required>
+                        <div class="subtask-input">
+                            <h3>Subtasks</h3>
+                            <div id="subtask-container" class="subtask-container enter-inside">
+                                
+                            </div>
+        
+                            <button type="button" class="task-button" id="subtask-button">Add subtask</button>
                         </div>
-    
-                        <button type="button" class="task-button" id="subtask-button">Add subtask</button>
-                    </div>
-                    
-                    <button type="submit" class="task-button bottom-margin id="task-button">Add task</button>
-                    <button type="button" class="task-button" id="cancel-button" onclick="closeDialog()">Cancel</button>
-                </form>
-            </div>
-        </dialog>
-        
-        
-        <div class="content">
-
+                        
+                        <button type="submit" class="task-button bottom-margin id="task-button">Add task</button>
+                        <button type="button" class="task-button" id="cancel-button" onclick="closeDialog()">Cancel</button>
+                    </form>
+                </div>
+            </dialog>
         </div>
-    </main>
+        <header>
+            <h1>TODO App</h1>
+        </header>
+        <main>
+            
+            
+            
+            <div class="content">
+    
+            </div>
+        </main>
+    </div>
+    
     <footer>
-
+        <p>© Chong Lee</p>
+        <p>2025</p>
     </footer>
 </body>
 </html>
