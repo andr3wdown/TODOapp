@@ -1,9 +1,8 @@
 //check the debug value in local storage if it's not found set it to false by default
-let debug = localStorage.getItem("debug") == "true"
-if(debug == null){
-    debug = false;
-    localStorage.setItem("debug", debug);
+if(localStorage.getItem("debug") == null){
+    localStorage.setItem("debug", false);
 }
+let debug = localStorage.getItem("debug") == "true";
 
 let todo = null;
 let editing = false;
