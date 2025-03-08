@@ -96,16 +96,29 @@ function createNewTask(){
     
 }
 //finalizes the creation of a new task and adds it to the todo object
-function addTaskToForm(){
-    preventDefault();
+function addTaskToPage(){
+    event.preventDefault();
+    //check for errors
     if(todo == null){
         alert("Error: todo object not initialized!");
+        console.log("todo object not initialized");
+        return;
+    }
+    if(current_task == null){
+        alert("Error: current task not initialized!");
+        console.log("current task not initialized");
         return;
     }
     
-    todo.nextId += 1;
+    
     //fetch the task name from the input field and the subtasks from their corresponding input fields
     current_task.text = document.getElementById("task-name").value;
+    //check if the task name is empty and if it is show an alert and return
+    if(current_task.text == ""){
+        alert("Error: task name cannot be empty!");
+        console.log("task name cannot be empty");
+        return;
+    }
     subtasks = document.querySelectorAll(".subtask-field");
     for(let i = 0; i < current_task.subtasks.length; i++){
         current_task.subtasks[i].text = subtasks[i].value;
@@ -114,12 +127,18 @@ function addTaskToForm(){
     todo.tasks.push(Object.assign({}, current_task));
     //update the localStorage with the new todo object
     localStorage.setItem("todo", JSON.stringify(todo));
-    
+    todo.nextId += 1;
+
+
     current_task = null;
     closeDialog();
     if(debug){
         console.log("added a new task");
     }
+}
+
+function createTaskElement(task){
+
 }
 
 //adds a new subtask to a task

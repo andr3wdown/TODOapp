@@ -56,6 +56,7 @@ header{
 .subtask-container{
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 .subtask-input{
     display: flex;
@@ -76,6 +77,7 @@ header{
 .edits{
     display: flex;
     justify-content: flex-end;
+    justify-self: flex-end;
     width: 50%;
 }
 
@@ -106,6 +108,12 @@ h1, h2, h3, h4, h5, h6{
 }
 .rounded{
     border-radius: 20px;
+}
+.bottom-border{
+    border-bottom: 1px solid var(--button-color);
+}
+.bottom-padding{
+    padding-bottom: 1rem;
 }
 .dialog-container{
     position: fixed;
@@ -169,4 +177,56 @@ header{
     background-color: var(--button-color);
     border-radius: 10px;
     border: 2px solid var(--content-color);
+}
+.content{
+    margin-top: 1rem;
+}
+.content-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--content-color);
+    border-radius: 20px;
+    margin-bottom: 1rem;
+}
+.task-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.task-card{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card-color);
+    padding: 1rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    margin-inline: 1rem;
+    min-width: 400px;
+    min-height: 400px;
+}
+.task-button-container{
+    display: flex;
+    margin-top: 2rem;
+    width: 100%;
+    justify-content: space-between;
+}
+.big-task-button{
+    min-width: 65px;
+    height: 65px;
+    background-color: var(--button-color);
+}
+.text-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 1rem;
+}
+.text-button *{
+    color: var(--button-text);
+}
+.text-button p{
+    margin-right: 1rem;
 }

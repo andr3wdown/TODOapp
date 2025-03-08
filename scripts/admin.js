@@ -19,3 +19,8 @@ function toggleDebug(){
     checkbox.innerHTML = `<img style="filter: invert(1);" src="img/check_${debug ? "0" : "1"}.svg" alt="checkmark">`;
     localStorage.setItem("debug", !debug);
 }
+//reset the localstorage and reload the page
+function reset(){
+    localStorage.clear();
+    location.reload();
+}
