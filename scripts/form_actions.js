@@ -1,4 +1,4 @@
-//check the debug value in local storage if it is not found set it to false by default
+//check the debug value in local storage if it's not found set it to false by default
 let debug = localStorage.getItem("debug") == "true"
 if(debug == null){
     debug = false;
