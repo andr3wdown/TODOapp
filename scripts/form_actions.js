@@ -1,3 +1,10 @@
+//check the debug value in local storage if it is not found set it to false by default
+let debug = localStorage.getItem("debug") == "true"
+if(debug == null){
+    debug = false;
+    localStorage.setItem("debug", debug);
+}
+
 let todo = null;
 let editing = false;
 let current_task = null;
@@ -26,6 +33,9 @@ function initialize(){
             nextId: 0,
             tasks: []
         };
+        if(debug){
+            console.log("todo object not found, creating a new one");
+        }
     }
     //initialize the button that opens the dialog box for creating a new task
     let showbutton = document.getElementById("dialog-button");
@@ -41,12 +51,18 @@ function initialize(){
         addSubtaskToForm(current_task.id);
         console.log("pressed");
     });
+    if(debug){
+        console.log("initialized");
+    }
 }
 
 //delete subtask with id subtaskId
 function deleteSubtask(subtaskId) {
     let subtask = document.getElementById(subtaskId);
     subtask.remove();
+    if(debug){
+        console.log("deleted subtask with id: " + subtaskId);
+    }
 }
 
 //toggles the completion status of the subtask with subtaskId and changes the icon
@@ -66,6 +82,9 @@ function toggleSubtask(subtaskId){
         checkbox.setAttribute("toggled", "true");
         toggled = true;
     }
+    if(debug){
+        console.log("toggled subtask with id: " + subtaskId + " to: " + toggled);
+    }
 }
 //intializes the current_task variable with a new task object
 function createNewTask(){
@@ -75,6 +94,7 @@ function createNewTask(){
     }
     current_task = Object.assign({}, task_template);
     current_task.id = todo.nextId;
+    
 }
 //finalizes the creation of a new task and adds it to the todo object
 function addTaskToForm(){
@@ -98,6 +118,9 @@ function addTaskToForm(){
     
     current_task = null;
     closeDialog();
+    if(debug){
+        console.log("added a new task");
+    }
 }
 
 //adds a new subtask to a task
@@ -120,6 +143,9 @@ function addSubtaskToForm(taskId){
         //add the template to the subtask container
         subtaskContainer.innerHTML += template;
     }).catch(error => console.log(error));
+    if(debug){
+        console.log("added a new subtask to task with id: " + taskId);
+    }
 }
 
 //clear the input fields and close the dialog
@@ -132,6 +158,9 @@ function closeDialog(){
     subtaskContainer.innerHTML = "";
     current_task = null;
     dialog.close();
+    if(debug){
+        console.log("closed dialog");
+    }
 }
 //reset localstorage and reload the page
 //used for debugging
