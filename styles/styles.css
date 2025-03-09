@@ -73,7 +73,14 @@ header{
     margin-bottom: 0.5rem;
     padding: 0.5rem;
 }
-
+.subtask-form-card
+{
+    width: 100%;
+    background-color: var(--card-color);
+    display: flex;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+}
 .edits{
     display: flex;
     justify-content: flex-end;
@@ -229,4 +236,11 @@ header{
 }
 .text-button p{
     margin-right: 1rem;
+}
+@media screen and (max-width: 768px){
+    .dialog-container{
+        width: 90%;
+        left: calc(50% - 45vw);
+    }
+    
 }

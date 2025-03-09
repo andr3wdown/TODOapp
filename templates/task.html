@@ -1,14 +1,14 @@
 <div class="task-card" id="_task">
     <h3 class="bottom-margin bottom-border bottom-padding">_title</h3>
     <div class="subtask-container" id="_task-subtask-container">
-        
+        _subtasks
     </div>
     <div class="task-button-container">
-        <button class="big-task-button rounded"><img class="icon" src="img/edit.svg" alt=""></button>
-        <button class="big-task-button rounded"><img class="icon" src="img/delete.svg" alt=""></button>
-        <button class="big-task-button text-button rounded">
+        <button class="big-task-button rounded" onclick="editTask('_task')"><img class="icon" src="img/edit.svg" alt=""></button>
+        <button class="big-task-button rounded" onclick="deleteTask('_task')"><img class="icon" src="img/delete.svg" alt=""></button>
+        <button class="big-task-button text-button rounded" onclick="toggleTask('_task')">
             <p>mark as complete</p>
             <img class="icon" src="img/check_0.svg" alt="">
         </button>
-    </div>
+    </div>                
 </div>
