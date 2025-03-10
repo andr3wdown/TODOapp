@@ -417,6 +417,7 @@ function startEditTask(taskId){
 //finalize the editing of a task and update the task on the page
 function finalizeEditTask(taskId){
     event.preventDefault();
+    //swap the old task with the new one
     let current_task = parseTaskFromForm(parseInt(taskId));
     if(current_task == null){
         return;
@@ -425,8 +426,9 @@ function finalizeEditTask(taskId){
     current_task.completed = old_task.completed;
     let index = todo.tasks.indexOf(old_task);
     todo.tasks[index] = current_task;
+    //update the localStorage with the new todo object
     localStorage.setItem("todo", JSON.stringify(todo));
-
+    //update the task on the page
     createTaskElement(current_task, current_task.completed ? "complete-task-container" : "uncomplete-task-container", taskId);
 
     closeDialog();
