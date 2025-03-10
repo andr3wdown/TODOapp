@@ -19,14 +19,14 @@ It was a solo project
 - [License](#license)
 
 ## About The App
-TODO App is an app where you can create and edit tasks with subtasks and you can mark them as done as needed 
+TODO App is an app where you can create and edit tasks with subtasks and you can mark them as done as needed, sort them etc.
 
 ## Screenshots
 Add here atleast one screenshot of the working application 
 ![alt text](https://i.ibb.co/1tNsmGH4/ss1.png)
 ![alt text](https://i.ibb.co/QFbgf8bs/ss2.png)
 
-Picture by [Kelly Sikkema](https://unsplash.com/@kellysikkema)
+Picture by [Chong Lee](https://github.com/andr3wdown)
 
 ## Technologies
 I used the following technologies `html`, `css`, `javascript`
@@ -36,12 +36,10 @@ I used the following technologies `html`, `css`, `javascript`
 - open index.html in your browser
 
 ## Status
-TODO is still in progress. `Version 2` will be out soon.
+Project is complete
 
 ## Credits
 - [Chong Lee](https://github.com/andr3wdown)
 
 ## License
-Choose a license for your project by following this [guide](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository).
-
-Example: MIT license @ [author](author.com)
+- MIT license @ [Chong Lee](https://github.com/andr3wdown)
