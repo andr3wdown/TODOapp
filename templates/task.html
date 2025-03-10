@@ -4,11 +4,13 @@
         _subtasks
     </div>
     <div class="task-button-container">
-        <button class="big-task-button rounded" onclick="editTask('_task')"><img class="icon" src="img/edit.svg" alt=""></button>
-        <button class="big-task-button rounded" onclick="deleteTask('_task')"><img class="icon" src="img/delete.svg" alt=""></button>
-        <button class="big-task-button text-button rounded" onclick="toggleTask('_task')">
-            <p>mark as complete</p>
-            <img class="icon" src="img/check_0.svg" alt="">
+        <div>
+            <button class="big-task-button rounded" onclick="startEditTask('_task')"><img class="icon" src="img/edit.svg" alt=""></button>
+            <button class="big-task-button rounded" onclick="deleteTask('_task')"><img class="icon" src="img/delete.svg" alt=""></button>
+        </div>
+        
+        <button class="task-complete-button big-task-button text-button rounded" onclick="toggleTask('_task')">
+            _button
         </button>
     </div>                
 </div>

@@ -16,11 +16,12 @@
 <body onload="initialize()">
     <div class="container">
         <div class="overlay">
-            <button id="dialog-button" class="task-button"><img style="width: 40px; height: 40px;" class="icon" src="img/add.svg" alt=""></button>
+            <button id="reset-button" class="task-button" onclick="reset()"><p>reset all tasks</p><img style="width: 40px; height: 40px;" class="icon" src="img/reset.svg" alt=""></button>
+            <button id="dialog-button" class="task-button"><p>add a new task</p><img style="width: 40px; height: 40px;" class="icon" src="img/add.svg" alt=""></button>
             <dialog id="create-dialog" class="dialog-container">
                 <div class="task-input center-inside">
                     <form class="task-form center-inside rounded" id="task-form" onsubmit="addTaskToPage('uncomplete-task-container')" method="post">
-                        <h2>Create your task</h2>
+                        <h2 id="form-title">Create your task</h2>
                         <input id="task-name" class="rounded bottom-margin" type="text" placeholder="What is your task?">
                         <div class="subtask-input">
                             <h3>Subtasks</h3>
@@ -41,6 +42,11 @@
             <h1>TODO App</h1>
         </header>
         <main>
+            <div class="sort-bar center-inside top-margin">
+                <p class="text-button rounded inline-margin">Sort by:</p>
+                <button class="big-task-button text-button rounded inline-margin" onclick="sortById()">Order Added</button>
+                <button class="big-task-button text-button rounded inline-margin" onclick="sortByName()">Task Name</button>
+            </div>
             <div class="content center-inside">
                 <div class="content-container">
                     <h2>Uncomplete tasks</h2>
@@ -51,9 +57,12 @@
             </div>
             <div class="content center-inside">
                 <div class="content-container">
-                    <h2>Complete tasks</h2>
+                    <h2>Completed tasks</h2>
                     <div class="task-container" id="complete-task-container">
                         
+                    </div>
+                    <div class="center-inside">
+                        <button class="big-task-button text-button rounded" onclick="clearCompletedTasks()">Clear completed tasks</button>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@
     --content-color: #2e3b57;
     --card-color: #2b3442;
     --dialog-color: #8497c0;
+    --transparent: #2b344200;
 
     --button-color: #b1b1b1;
     --button-hover: #6b6b6b;
@@ -43,10 +44,7 @@ header{
     display: flex;
     justify-content: center;
 }
-.task-input{
 
-
-}
 .task-form{
     flex-direction: column;
     background-color: var(--content-color);
@@ -135,9 +133,19 @@ h1, h2, h3, h4, h5, h6{
     margin-bottom: 2rem;
 }
 #dialog-button{
+    z-index: 100;
     position: fixed;
-    right: 2rem;
+    right: 1rem;
     bottom: 2rem;
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+}
+#reset-button{
+    z-index: 100;
+    position: fixed;
+    right: 1rem;
+    bottom: 8rem;
     width: 70px;
     height: 70px;
     border-radius: 50px;
@@ -151,6 +159,22 @@ h1, h2, h3, h4, h5, h6{
     background-color: var(--button-color);
     border-radius: 25px;
 }
+
+.task-button p{
+    display: none;
+    position: fixed;
+    right: 6rem;
+    font-size: 1.25rem;
+    width: 130px;
+    background-color: var(--card-color);
+    border: 5px solid var(--bg-color);
+    border-radius: 20px;
+    padding-inline: 1rem;
+}
+.task-button:hover p{
+    display: block;
+}
+
 input{
     color:black;
     padding: 0.5rem;
@@ -227,6 +251,7 @@ header{
     min-width: 65px;
     height: 65px;
     background-color: var(--button-color);
+    color: var(--button-text);
 }
 .text-button{
     display: flex;
@@ -241,6 +266,13 @@ header{
 .text-button p{
     margin-right: 1rem;
 }
+.inline-margin{
+    margin-inline: 0.25rem;
+}
+.top-margin{
+    margin-top: 1rem;
+}
+
 @media screen and (max-width: 768px){
     .dialog-container{
         width: 90%;

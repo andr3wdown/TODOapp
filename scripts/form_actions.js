@@ -39,12 +39,12 @@ function initialize(){
     //initialize the button that opens the dialog box for creating a new task
     let showbutton = document.getElementById("dialog-button");
     showbutton.addEventListener("click", () => {
+        setForm("Create a new task", "Create task", () => addTaskToPage("uncomplete-task-container"));
         popup = document.getElementById("create-dialog");
         popup.showModal();
-        document.getElementById("task-form").onsubmit = () => addTaskToPage("uncomplete-task-container");
     });
     
-    //initialize the button that adds a new task in the dialog box
+    //initialize the button that adds a new subtask in the dialog box
     let subtask_button = document.getElementById("subtask-button");
     subtask_button.addEventListener("click", () => {
         addSubtaskToForm(todo.nextId);
@@ -87,7 +87,7 @@ function deleteSubtask(subtaskId) {
         console.log("deleted subtask with id: " + subtaskId);
     }
 }
-
+//delete subtask with id subtaskId from the todo object and the page
 function deletePageSubtask(subtaskId){
     //get the task and subtask ids from the subtaskId
     let taskId = parseInt(subtaskId.split("-")[0]);
@@ -105,6 +105,7 @@ function deletePageSubtask(subtaskId){
 //delete task with id taskId
 function deleteTask(taskId){
     let task = document.getElementById(taskId);
+    
     task.remove();
     //delete the task from the todo object
     todo.tasks = todo.tasks.filter(task => task.id != taskId);
@@ -154,6 +155,37 @@ function togglePageSubtask(subtaskId){
     localStorage.setItem("todo", JSON.stringify(todo));
 }
 
+//toggle task between completed or uncompleted
+function toggleTask(taskId){
+    if(debug){
+        console.log("toggling task with id: " + taskId);
+    }
+    let task_element = document.getElementById(taskId);
+
+    //find the task in the todo object and toggle the completed status
+    let task = todo.tasks.filter(task => task.id == parseInt(taskId))[0];
+    task.completed = !task.completed;
+
+    //update the button
+    let button = task_element.querySelector(".task-complete-button");
+    button.innerHTML = `
+            <p>${task.completed ? "uncomplete" : "complete"} task</p>
+            <img class="icon" src="img/check_${task.completed ? "1": "0"}.svg" alt="">
+            `;
+    let task_html = task_element.outerHTML;
+
+    //remove the task from the page and then add it to the correct task container
+    task_element.remove();
+    if(debug){
+        console.log("removed task with id: " + taskId);
+    }
+    let task_container = task.completed ? "complete-task-container" : "uncomplete-task-container";
+    document.getElementById(task_container).innerHTML += task_html;
+    
+    //update the localStorage with the new todo object
+    localStorage.setItem("todo", JSON.stringify(todo));
+}
+
 //finalizes the creation of a new task and adds it to the todo object
 function addTaskToPage(task_container){
     event.preventDefault();
@@ -164,7 +196,7 @@ function addTaskToPage(task_container){
         return;
     }
     
-    let current_task = parseTaskFromForm();
+    let current_task = parseTaskFromForm(todo.nextId);
 
     //add the new task to the todo object tasks array
     todo.tasks.push(Object.assign({}, current_task));
@@ -184,10 +216,15 @@ function addTaskToPage(task_container){
         console.log("added a new task");
     }
 }
+
+
 //gets the data for the task from the form and returns it
-function parseTaskFromForm(){
+function parseTaskFromForm(taskId){
     let current_task = Object.assign({}, task_template);
-    current_task.id = todo.nextId;
+    //I have no idea why this is necessary but it is otherwise a empty subtask is added to the new task for each existing task on the page
+    current_task.subtasks = [];
+
+    current_task.id = taskId;
     //fetch the task name from the input field and the subtasks from their corresponding input fields
     current_task.text = document.getElementById("task-name").value;
     //check if the task name is empty and if it is show an alert and return
@@ -205,9 +242,7 @@ function parseTaskFromForm(){
             console.log(subtasks[i]);
         }  
     }
-
-    //I have no idea why this is necessary but it is otherwise a empty subtask is added to the new task for each existing task on the page
-    current_task.subtasks = [];
+    
 
     //add the subtasks to the current task
     for(let i = 0; i < subtasks.length; i++){
@@ -219,9 +254,8 @@ function parseTaskFromForm(){
 
     return current_task;
 }
-
 //cretes the task element and adds it to the task container in the page
-function createTaskElement(task, task_container){
+function createTaskElement(task, task_container, taskId=""){
     let taskContainer = document.getElementById(task_container);
     //fetch the template for the task card from the templates folder
     //if the template is not found, log the error
@@ -229,6 +263,10 @@ function createTaskElement(task, task_container){
         //replace the placeholders in the template with the actual values
         template = template.replaceAll("_task", task.id);
         template = template.replace("_title", task.text);
+        template = template.replace("_button", `
+            <p>${task.completed ? "uncomplete" : "complete"} task</p>
+            <img class="icon" src="img/check_${task.completed ? "1": "0"}.svg" alt="">
+            `);
         //fetch the template for the subtask card from the templates folder loop through subtasks in the task add it to the task element template
         //if the template is not found, log the error
         fetch("../templates/subtask.html").then(response => response.text()).then(subtemplate => {
@@ -243,8 +281,15 @@ function createTaskElement(task, task_container){
                 subtasks += sub;
             }
             template = template.replace("_subtasks", subtasks);
-            //add the modified template to the task container
-            taskContainer.innerHTML += template;
+            //add the modified template to the task container if taskId is empty otherwise replace the task with the same id
+            if(taskId == ""){
+                taskContainer.innerHTML += template;
+            }
+            else{
+                let task_element = document.getElementById(taskId);
+                task_element.outerHTML = template;
+            }
+            
         }).catch(error => console.log(error));
     }).catch(error => console.log(error));
 }
@@ -281,6 +326,90 @@ function addSubtaskToForm(taskId){
         console.log("added a new subtask to task with id: " + taskId);
     }
 }
+function addExistingTaskToForm(taskId, task){
+    document.getElementById("task-name").value = task.text;
+    let subtaskContainer = document.getElementById("form-subtask-container");
+    //fetch the template for the subtask card from the templates folder
+    //if the template is not found, log the error
+    fetch("../templates/subtask_form.html").then(response => response.text()).then(template => {
+        //replace the placeholders in the template with the actual values
+        editing_subId = getSubtaskEditingId(task);
+        template = template.replaceAll("_task", taskId);
+        for(let i = 0; i < task.subtasks.length; i++){
+            let temp = template.replaceAll("_subid", task.subtasks[i].id);
+            subtaskContainer.innerHTML += temp;
+
+            let subtask_element = subtaskContainer.querySelector(`#edit${taskId}-${task.subtasks[i].id}`);
+            subtask_element.querySelector(".subtask-field").setAttribute("value", task.subtasks[i].text);
+            subtask_element.querySelector(".subtask-complete").setAttribute("toggled", task.subtasks[i].completed ? "true" : "false");
+            subtask_element.querySelector(".subtask-complete").innerHTML = `<img class="icon" src="img/check_${task.subtasks[i].completed ? "1" : "0"}.svg" alt="checkmark">`;
+        }
+    }).catch(error => console.log(error));
+}
+
+//initialize the form with the correct title, button and submit function
+function setForm(title, button, onSubmit){
+    document.getElementById("form-title").value = title;
+    document.getElementById("task-button").innerHTML = button;
+    document.getElementById("task-form").onsubmit = onSubmit;
+}
+//get the next id for a subtask in a task
+function getSubtaskEditingId(task){
+    if(task.subtasks.length == 0){
+        return 0;
+    }
+
+    let max = -1;
+    for(let i = 0; i < task.subtasks.length; i++){
+        if(task.subtasks[i].id > max){
+            max = task.subtasks[i].id;
+        }
+    }
+    return max + 1;
+}
+//start editing the task with taskId and fill the form with the task data
+function startEditTask(taskId){
+    if(todo == null){
+        alert("Error: todo object not initialized!");
+        return;
+    }
+    let task = todo.tasks.filter(task => task.id == taskId)[0];
+    
+    setForm("Edit task", "Edit task", () => finalizeEditTask(taskId));
+    addExistingTaskToForm(taskId, task);
+
+    popup = document.getElementById("create-dialog");
+    popup.showModal();
+}
+//finalize the editing of a task and update the task on the page
+function finalizeEditTask(taskId){
+    event.preventDefault();
+    let current_task = parseTaskFromForm(parseInt(taskId));
+    let old_task = todo.tasks.filter(task => task.id == parseInt(taskId))[0];
+    current_task.completed = old_task.completed;
+    let index = todo.tasks.indexOf(old_task);
+    todo.tasks[index] = current_task;
+    localStorage.setItem("todo", JSON.stringify(todo));
+
+    createTaskElement(current_task, current_task.completed ? "complete-task-container" : "uncomplete-task-container", taskId);
+
+    closeDialog();
+    if(debug){
+        console.log("edited task with id: " + taskId);
+    }
+}
+// sort tasks by id
+function sortById(){
+    todo.tasks.sort((a, b) => a.id - b.id);
+    localStorage.setItem("todo", JSON.stringify(todo));
+    reloadTasks();
+}
+//sort tasks by name
+function sortByName(){
+    todo.tasks.sort((a, b) => a.text.localeCompare(b.text));
+    localStorage.setItem("todo", JSON.stringify(todo));
+    reloadTasks();
+}
 
 //clear the input fields and close the dialog
 function closeDialog(){
@@ -296,6 +425,17 @@ function closeDialog(){
         console.log("closed dialog");
     }
 }
+
+//clear all completed tasks
+function clearCompletedTasks(){
+    todo.tasks = todo.tasks.filter(task => !task.completed);
+    localStorage.setItem("todo", JSON.stringify(todo));
+    reloadTasks();
+    if(debug){
+        console.log("cleared completed tasks");
+    }
+}
+
 //reset localstorage and reload the page
 //used for debugging
 function reset(){
