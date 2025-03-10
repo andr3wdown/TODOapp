@@ -197,7 +197,9 @@ function addTaskToPage(task_container){
     }
     
     let current_task = parseTaskFromForm(todo.nextId);
-
+    if(current_task == null){
+        return;
+    }
     //add the new task to the todo object tasks array
     todo.tasks.push(Object.assign({}, current_task));
 
@@ -247,6 +249,11 @@ function parseTaskFromForm(taskId){
     //add the subtasks to the current task
     for(let i = 0; i < subtasks.length; i++){
         current_task.subtasks.push(Object.assign({}, subtask_template));
+        if(subtasks[i].querySelector(".subtask-field").value == ""){
+            alert("Error: subtask name cannot be empty!");
+            console.log("subtask name cannot be empty");
+            return;
+        }
         current_task.subtasks[i].text = subtasks[i].querySelector(".subtask-field").value;
         current_task.subtasks[i].id = i;
         current_task.subtasks[i].completed = subtasks[i].querySelector(".subtask-complete").getAttribute("toggled") == "true" ? true : false;
@@ -385,6 +392,9 @@ function startEditTask(taskId){
 function finalizeEditTask(taskId){
     event.preventDefault();
     let current_task = parseTaskFromForm(parseInt(taskId));
+    if(current_task == null){
+        return;
+    }
     let old_task = todo.tasks.filter(task => task.id == parseInt(taskId))[0];
     current_task.completed = old_task.completed;
     let index = todo.tasks.indexOf(old_task);
