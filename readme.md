@@ -2,7 +2,7 @@
 TODO App for the course TO00BL10-3025 by Chong Lee
 
 ## Demo link:
-Access my site at [placeholder](https://google.com)
+Access my site at [TODO-chonglee](https://todo-chonglee.netlify.app/)
 
 ## How was the workload divided
 It was a solo project
