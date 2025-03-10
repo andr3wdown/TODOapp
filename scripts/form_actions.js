@@ -49,9 +49,34 @@ function initialize(){
     subtask_button.addEventListener("click", () => {
         addSubtaskToForm(todo.nextId);
     });
+
+    loadTasks();
     if(debug){
         console.log("initialized");
     }
+}
+
+//load the tasks from the todo object in localStorage
+function loadTasks(){
+    if(debug){
+        console.log("Found tasks: " + todo.tasks.length);
+    }
+    for(let i = 0; i < todo.tasks.length; i++){
+        let complete = todo.tasks[i].completed;
+        createTaskElement(todo.tasks[i], complete ? "complete-task-container" : "uncomplete-task-container");
+    }
+    if(debug){
+        console.log("loaded tasks");
+    }
+}
+
+//clear the task containers and reload the tasks from the todo object
+function reloadTasks(){
+    let complete = document.getElementById("complete-task-container");
+    let uncomplete = document.getElementById("uncomplete-task-container");
+    complete.innerHTML = "";
+    uncomplete.innerHTML = "";
+    loadTasks();
 }
 
 //delete subtask with id subtaskId
