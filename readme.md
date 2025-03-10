@@ -22,7 +22,6 @@ It was a solo project
 TODO App is an app where you can create and edit tasks with subtasks and you can mark them as done as needed, sort them etc.
 
 ## Screenshots
-Add here atleast one screenshot of the working application 
 ![alt text](https://i.ibb.co/1tNsmGH4/ss1.png)
 ![alt text](https://i.ibb.co/QFbgf8bs/ss2.png)
 
