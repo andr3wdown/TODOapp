@@ -19,7 +19,7 @@
             <button id="dialog-button" class="task-button"><img style="width: 40px; height: 40px;" class="icon" src="img/add.svg" alt=""></button>
             <dialog id="create-dialog" class="dialog-container">
                 <div class="task-input center-inside">
-                    <form class="task-form center-inside rounded" onsubmit="addTaskToPage()" method="post">
+                    <form class="task-form center-inside rounded" id="task-form" onsubmit="addTaskToPage('uncomplete-task-container')" method="post">
                         <h2>Create your task</h2>
                         <input id="task-name" class="rounded bottom-margin" type="text" placeholder="What is your task?">
                         <div class="subtask-input">
@@ -44,7 +44,15 @@
             <div class="content center-inside">
                 <div class="content-container">
                     <h2>Uncomplete tasks</h2>
-                    <div class="task-container" id="task-container">
+                    <div class="task-container" id="uncomplete-task-container">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="content center-inside">
+                <div class="content-container">
+                    <h2>Complete tasks</h2>
+                    <div class="task-container" id="complete-task-container">
                         
                     </div>
                 </div>

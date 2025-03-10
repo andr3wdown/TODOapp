@@ -5,7 +5,6 @@ if(localStorage.getItem("debug") == null){
 let debug = localStorage.getItem("debug") == "true";
 
 let todo = null;
-let current_task = null;
 let editing = false;
 let editing_subId = 0;
 
@@ -42,14 +41,13 @@ function initialize(){
     showbutton.addEventListener("click", () => {
         popup = document.getElementById("create-dialog");
         popup.showModal();
-        //createNewTask();
+        document.getElementById("task-form").onsubmit = () => addTaskToPage("uncomplete-task-container");
     });
     
     //initialize the button that adds a new task in the dialog box
     let subtask_button = document.getElementById("subtask-button");
     subtask_button.addEventListener("click", () => {
         addSubtaskToForm(todo.nextId);
-        console.log("pressed");
     });
     if(debug){
         console.log("initialized");
@@ -62,6 +60,33 @@ function deleteSubtask(subtaskId) {
     subtask.remove();
     if(debug){
         console.log("deleted subtask with id: " + subtaskId);
+    }
+}
+
+function deletePageSubtask(subtaskId){
+    //get the task and subtask ids from the subtaskId
+    let taskId = parseInt(subtaskId.split("-")[0]);
+    let subId = parseInt(subtaskId.split("-")[1]);
+
+    //get the task and filter out the subtask from the todo object
+    let task = todo.tasks.filter(task => task.id == taskId)[0];
+    task.subtasks = task.subtasks.filter(subtask => subtask.id != subId);
+
+    //update the localStorage with the new todo object
+    localStorage.setItem("todo", JSON.stringify(todo));
+
+    deleteSubtask(subtaskId);
+}
+//delete task with id taskId
+function deleteTask(taskId){
+    let task = document.getElementById(taskId);
+    task.remove();
+    //delete the task from the todo object
+    todo.tasks = todo.tasks.filter(task => task.id != taskId);
+    //update the localStorage with the new todo object
+    localStorage.setItem("todo", JSON.stringify(todo));
+    if(debug){
+        console.log("deleted task with id: " + taskId);
     }
 }
 
@@ -89,31 +114,23 @@ function toggleSubtask(subtaskId){
 //toggles the completion status of the task with taskId and changes the icon for the subtaks on the page
 function togglePageSubtask(subtaskId){
     //get the task and subtask ids from the subtaskId
-    console.log(subtaskId);
-    console.log(subtaskId.split("-")[0]);
     taskId = parseInt(subtaskId.split("-")[0]);
     subId = parseInt(subtaskId.split("-")[1]);
-    //toggle the subtask in the todo object
-    
+
+    //get the task and subtask from the todo object
+    let task = todo.tasks.filter(task => task.id == taskId)[0];
+    let subtask = task.subtasks.filter(subtask => subtask.id == subId)[0];
+    //toggle the subtask in the todo
+    subtask.completed = !subtask.completed;
+
     toggleSubtask(subtaskId);
-    console.log(todo);
-    console.log(taskId);
-    console.log(subId);
-    todo.tasks[taskId].subtasks[subId].completed = !todo.tasks[taskId].subtasks[subId].completed;
+    
     //update the localStorage with the new todo object
     localStorage.setItem("todo", JSON.stringify(todo));
 }
-//intializes the current_task variable with a new task object
-function createNewTask(){
-    if(todo == null){
-        alert("Error: todo object not initialized!");
-        return;
-    }
-    current_task = Object.assign({}, task_template);
-    current_task.id = todo.nextId; 
-}
+
 //finalizes the creation of a new task and adds it to the todo object
-function addTaskToPage(){
+function addTaskToPage(task_container){
     event.preventDefault();
     //check for errors
     if(todo == null){
@@ -121,6 +138,29 @@ function addTaskToPage(){
         console.log("todo object not initialized");
         return;
     }
+    
+    let current_task = parseTaskFromForm();
+
+    //add the new task to the todo object tasks array
+    todo.tasks.push(Object.assign({}, current_task));
+
+    //add the new task to the page
+    createTaskElement(current_task, task_container);
+
+    //increment the nextId for the todo object and reset the current_task variable
+    todo.nextId += 1;
+    editing_subId = 0;
+
+    //update the localStorage with the new todo object
+    localStorage.setItem("todo", JSON.stringify(todo));
+
+    closeDialog();
+    if(debug){
+        console.log("added a new task");
+    }
+}
+//gets the data for the task from the form and returns it
+function parseTaskFromForm(){
     let current_task = Object.assign({}, task_template);
     current_task.id = todo.nextId;
     //fetch the task name from the input field and the subtasks from their corresponding input fields
@@ -131,34 +171,33 @@ function addTaskToPage(){
         console.log("task name cannot be empty");
         return;
     }
-    //get all the subtasks from the form and add them to the current task's subtasks array
+    //get all the subtasks from the form
     subtasks = document.querySelectorAll(".subtask-form-card");
+
+    if(debug){
+        console.log("found subtasks:" + subtasks.length);
+        for(let i = 0; i < subtasks.length; i++){
+            console.log(subtasks[i]);
+        }  
+    }
+
+    //I have no idea why this is necessary but it is otherwise a empty subtask is added to the new task for each existing task on the page
+    current_task.subtasks = [];
+
+    //add the subtasks to the current task
     for(let i = 0; i < subtasks.length; i++){
         current_task.subtasks.push(Object.assign({}, subtask_template));
         current_task.subtasks[i].text = subtasks[i].querySelector(".subtask-field").value;
         current_task.subtasks[i].id = i;
         current_task.subtasks[i].completed = subtasks[i].querySelector(".subtask-complete").getAttribute("toggled") == "true" ? true : false;
     }
-    //add the new task to the todo object tasks array
-    todo.tasks.push(Object.assign({}, current_task));
 
-    //add the new task to the page
-    createTaskElement(current_task);
-
-    //increment the nextId for the todo object and reset the current_task variable
-    todo.nextId += 1;
-    editing_subId = 0;
-
-    //update the localStorage with the new todo object
-    localStorage.setItem("todo", JSON.stringify(todo));
-    closeDialog();
-    if(debug){
-        console.log("added a new task");
-    }
+    return current_task;
 }
+
 //cretes the task element and adds it to the task container in the page
-function createTaskElement(task){
-    let taskContainer = document.getElementById("task-container");
+function createTaskElement(task, task_container){
+    let taskContainer = document.getElementById(task_container);
     //fetch the template for the task card from the templates folder
     //if the template is not found, log the error
     fetch("../templates/task.html").then(response => response.text()).then(template => {
@@ -227,7 +266,6 @@ function closeDialog(){
     editing_subId = 0;
     taskInput.value = "";
     subtaskContainer.innerHTML = "";
-    current_task = null;
     dialog.close();
     if(debug){
         console.log("closed dialog");
