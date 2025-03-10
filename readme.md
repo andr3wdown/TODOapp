@@ -23,8 +23,8 @@ TODO App is an app where you can create and edit tasks with subtasks and you can
 
 ## Screenshots
 Add here atleast one screenshot of the working application 
-![alt text](https://drive.google.com/drive-viewer/AKGpihb2LoiJjjzBPrk4_PzoRlWusURDX2-LE5Qx7qQUdvJxCHnhAp4TBxuRJ1SQXZvweKRd9kykeSqwdn_QEqMM9Jn6-zU-8OnOPgM=s1600-rw-v1)
-![alt text](https://drive.google.com/drive-viewer/AKGpihb6oiaJGCqVIv3TfI-HizFE6zpNL7ASyyJYONmTVmP6LpE6JAZvbkungIbXYZMFhBPLHns3DvKKwtqENMIOAPu_z7A=s1600-rw-v1)
+![alt text](https://i.ibb.co/1tNsmGH4/ss1.png)
+![alt text](https://i.ibb.co/QFbgf8bs/ss2.png)
 
 Picture by [Kelly Sikkema](https://unsplash.com/@kellysikkema)
 
