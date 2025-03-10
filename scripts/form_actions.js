@@ -50,6 +50,17 @@ function initialize(){
         addSubtaskToForm(todo.nextId);
     });
 
+    //set event listener for resetting field border colors
+    document.addEventListener("click", (event) => {
+        let input_field = document.getElementById("task-name");
+        input_field.style.border = "2px solid black";
+        let form = document.getElementById("form-subtask-container");
+        let subtask_fields = form.querySelectorAll(".subtask-field");
+        for(let i = 0; i < subtask_fields.length; i++){
+            subtask_fields[i].style.border = "2px solid black";
+        }
+    });
+
     loadTasks();
     if(debug){
         console.log("initialized");
@@ -67,6 +78,16 @@ function loadTasks(){
     }
     if(debug){
         console.log("loaded tasks");
+    }
+}
+//reset the border colors of the form fields
+function resetFormBorders(){
+    let inputfield = document.getElementById("task-name");
+    inputfield.style.border = "2px solid black";
+
+    let subtask_fields = subtasks[i].querySelectorAll(".subtask-field");
+    for(let i = 0; i < subtask_fields.length; i++){
+        subtask_fields[i].style.border = "2px solid black";
     }
 }
 
@@ -229,9 +250,11 @@ function parseTaskFromForm(taskId){
     current_task.id = taskId;
     //fetch the task name from the input field and the subtasks from their corresponding input fields
     current_task.text = document.getElementById("task-name").value;
-    //check if the task name is empty and if it is show an alert and return
+    //check if the task name is empty and if it is change field border to red and return
     if(current_task.text == ""){
-        alert("Error: task name cannot be empty!");
+        let inputfield = document.getElementById("task-name");
+        inputfield.focus();
+        inputfield.style.border = "2px solid red";
         console.log("task name cannot be empty");
         return;
     }
@@ -249,8 +272,11 @@ function parseTaskFromForm(taskId){
     //add the subtasks to the current task
     for(let i = 0; i < subtasks.length; i++){
         current_task.subtasks.push(Object.assign({}, subtask_template));
+        //check if the subtask name is empty and if it is change field border to red and return
         if(subtasks[i].querySelector(".subtask-field").value == ""){
-            alert("Error: subtask name cannot be empty!");
+            let inputfield = subtasks[i].querySelector(".subtask-field");
+            inputfield.focus();
+            inputfield.style.border = "2px solid red";
             console.log("subtask name cannot be empty");
             return;
         }
