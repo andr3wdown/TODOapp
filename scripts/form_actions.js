@@ -267,7 +267,6 @@ function parseTaskFromForm(taskId){
             console.log(subtasks[i]);
         }  
     }
-    
 
     //add the subtasks to the current task
     for(let i = 0; i < subtasks.length; i++){

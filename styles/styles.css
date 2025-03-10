@@ -7,7 +7,7 @@
     --transparent: #2b344200;
 
     --button-color: #b1b1b1;
-    --button-hover: #6b6b6b;
+    --button-hover: #9c9c9c;
     --button-text: #000000;
 }
 *{
@@ -276,7 +276,10 @@ input:focus, textarea:focus{
     outline: none;
     border: none;
 }
-
+button:hover{
+    background-color: var(--button-hover);
+    transition: all 0.3s;
+}
 @media screen and (max-width: 768px){
     .dialog-container{
         width: 90%;
