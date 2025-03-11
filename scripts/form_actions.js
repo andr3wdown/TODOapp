@@ -358,6 +358,7 @@ function addSubtaskToForm(taskId){
         console.log("added a new subtask to task with id: " + taskId);
     }
 }
+//edit an existing task
 function addExistingTaskToForm(taskId, task){
     document.getElementById("task-name").value = task.text;
     let subtaskContainer = document.getElementById("form-subtask-container");
@@ -405,11 +406,13 @@ function startEditTask(taskId){
         alert("Error: todo object not initialized!");
         return;
     }
+    //get the task from the todo object
     let task = todo.tasks.filter(task => task.id == taskId)[0];
     
     setForm("Edit task", "Edit task", () => finalizeEditTask(taskId));
     addExistingTaskToForm(taskId, task);
 
+    //open the dialog box
     popup = document.getElementById("create-dialog");
     popup.showModal();
 }
